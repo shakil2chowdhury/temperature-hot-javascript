@@ -41,7 +41,7 @@
             const cityInput = document.getElementById('cityInput').value; //get city name
 
             //set and fetch api
-            const cityName = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityInput +
+            const cityName = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityInput +
                 '&appid=21b61bca98a69d5ef56e8c7b01422855';
             fetch(cityName)
                 .then(res => res.json())
