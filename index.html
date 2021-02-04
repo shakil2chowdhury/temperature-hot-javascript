@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="cityInput" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="citySubmit" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="weatherIcon" src="https://openweathermap.org/img/wn/13n@2x.png" alt="">
+            <h1 id="city">Enter City Name</h1>
+            <h3><span id="temp">38.06</span>&deg;C</h3>
+            <h1 id="situation" class="lead">Clouds</h1>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('citySubmit').addEventListener('click', function () {
+            const cityInput = document.getElementById('cityInput').value; //get city name
+
+            //set and fetch api
+            const cityName = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityInput +
+                '&appid=21b61bca98a69d5ef56e8c7b01422855';
+            fetch(cityName)
+                .then(res => res.json())
+                .then(json => displayTemperature(json))
+        });
+
+        function displayTemperature(datas) {
+            document.getElementById('city').innerText = datas.name; //set city name
+            document.getElementById('temp').innerText = (parseFloat(datas.main['temp']) -
+                273.15).toFixed(2); //set temperature unit kelvin to celsius
+            document.getElementById('situation').innerText = datas.weather['0'].main; //set weather situation
+            const iconLink = "https://openweathermap.org/img/wn/" + datas.weather[0].icon +
+                "@2x.png"; //get weather icon
+            const weatherIcon = document.getElementById('weatherIcon').setAttribute("src", iconLink); //set weather icon
+        }
+    </script>
+
+</body>
+
+</html>
